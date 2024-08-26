@@ -43,8 +43,14 @@ class _HomePageState extends State<HomePage> {
 
     if (querySnapshot.size > 0) {
       DocumentSnapshot documentSnapshot = querySnapshot.docs[0];
+
+      await documentSnapshot.reference.delete();
     }
-    
+
+    setState(() {
+      tasks.removeAt(index);
+      checkboxes.removeAt(index);
+    });
   }
 
   @override
