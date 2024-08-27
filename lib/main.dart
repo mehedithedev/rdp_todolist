@@ -20,12 +20,23 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       title: 'To-Do List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: HomePage(),
+
+      // Test Code Below
+      // home: const Scaffold(
+      //   body: Center(
+      //     child: Text(
+      //       'Hello, The app is working',
+      //       style: TextStyle(
+      //           color: Colors.brown, fontSize: 30, fontFamily: 'Caveat'),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

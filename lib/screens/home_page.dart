@@ -55,6 +55,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+              height: 80,
+              child: Image.asset('assets/rdplogo.png'),
+            ),
+            Text(
+              'Daily Planner',
+              style: TextStyle(
+                  fontFamily: 'Caveat', fontSize: 32, color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
