@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: const HomePage(),
 
       // Test Code Below
       // home: const Scaffold(

@@ -1,30 +1,30 @@
-name: rdp_todolist
-description: "A new Flutter project."
-publish_to: 'none'
-version: 0.1.0
+name: rdp_todolist # Name of the project
+description: "A new Flutter project." # A brief description of the project
+publish_to: 'none' # this is my personal project and it's not going to be published to pub.dev
+version: 0.1.0 # defining the version of the project
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.5.0  # the software development kit version of dart
 
 dependencies:
   flutter:
-    sdk: flutter
-  firebase_core: ^3.3.0
-  cloud_firestore: ^5.2.1
-  table_calendar: ^3.1.2
+    sdk: flutter 
+  firebase_core: ^3.3.0 # Firebase core package
+  cloud_firestore: ^5.2.1 # Allows interaction with Firestore, our NoSQL cloud database
+  table_calendar: ^3.1.2 # Allows interaction with Firestore, our NoSQL cloud database
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^4.0.0 # linting for dart codes to show warnings and errors
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/ # defining the assets folder for images and fonts
 
   fonts:
-    - family: Caveat
+    - family: Caveat # specifying the font family by its name\, kept the .ttf file in above directory 
       fonts: 
-        - asset: assets/Caveat-Regular.ttf
+        - asset: assets/Caveat-Regular.ttf # specifying the font file path
