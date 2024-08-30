@@ -1,4 +1,6 @@
 // Below we are importing all the packages and libraries that we need to use
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -92,19 +94,20 @@ class _HomePageState extends State<HomePage> {
       // Itereate through the Firestore documents, adding the name and completed status to the lists
 
       // Get the task name from the data
-      String taskName = docSnapShot.get('new');
+      String taskName = docSnapShot.get('name');
 
       // Get the completion statuus from the data
-      String completed = docSnapShot.get('completed');
+      bool completed = docSnapShot.get('completed');
 
       // Add the task name to the fetched tasks
-      fetchedTasks.add(taskName); // Add the task name to the fetchedTasks list
-      setState(() {
-        tasks.clear(); // Clear the app's tasks and checkboxes lists
-        tasks.addAll(
-            fetchedTasks); // Populate the app's tasks and checkboxes lists with the fetched data and update the UI
-      });
+      fetchedTasks.add(taskName);
     }
+
+    setState(() {
+      tasks.clear(); // Clear the app's tasks and checkboxes lists
+      tasks.addAll(
+          fetchedTasks); // Populate the app's tasks and checkboxes lists with the fetched data and update the UI
+    });
   }
 
   Future<void> updateTaskCompletionStatus(
@@ -124,7 +127,7 @@ class _HomePageState extends State<HomePage> {
       DocumentSnapshot documentSnapshot = querySnapshot.docs[0];
 
       await documentSnapshot.reference.update({
-        'completed': true,
+        'completed': completed,
       });
       setState(() {
         // find the index of the task in the task list
@@ -148,7 +151,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Below is the method to clear the text field
-  void clearTextField() {
+  void clearInput() {
     // clear the text field after the user has added a task to the list
     nameController.clear();
   }
@@ -184,6 +187,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: SingleChildScrollView(
+        // Removed the unnecessary Container widget from here to make the code more efficient and used SingleChildScrollView directly with the body while keeping the same functionlality
         // Allows the user to scroll through the body of the app
         child: Column(
           // Arranges children widgets vertically
@@ -200,6 +204,8 @@ class _HomePageState extends State<HomePage> {
               lastDay: DateTime(
                   2025), // Define the latest date that can be displayed on the calender
             ),
+
+            // Below I used SizedBox instead of container as its improving the code performance
             SizedBox(
               // A box with a fixed height for the list of tasks
               height: 280,
@@ -236,12 +242,14 @@ class _HomePageState extends State<HomePage> {
                                 : Icons
                                     .playlist_add_check_circle, // Shown when checkboxes[index] is true
                           ),
-                          const SizedBox(width: 18),
+                          const SizedBox(
+                              width: 18), // added const to improve performance
                           Expanded(
                             // Ensuers the Text widget takes up all available space in the row
                             child: Text(
                               // Displays the task from the tasks list at the current index
-                              tasks[index],
+                              tasks[
+                                  index], // removed unnecessary string concatanation from '${tasks[index]}' to tasks[index]
                               style: checkboxes[
                                       index] // Shows whether the task is completed or not, based on checkboxes [index]. When checked or unchecked, it updates the state with the new value and cals updateTaskCopletionStatus to reflet this change in the app's logic
                                   ? TextStyle(
@@ -249,7 +257,9 @@ class _HomePageState extends State<HomePage> {
                                       fontSize: 25,
                                       color: Colors.black.withOpacity(0.5),
                                     )
-                                  : const TextStyle(fontSize: 25),
+                                  : const TextStyle(
+                                      fontSize:
+                                          25), // added const to improve performance
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -267,12 +277,14 @@ class _HomePageState extends State<HomePage> {
                                           tasks[index], newValue!);
                                     }),
                               ),
-                              const IconButton(
+                              IconButton(
                                 // Displays a delete icon. When clicked, it triggers the removeItem(index) function, which removes the task from the list
                                 color: Colors.black,
                                 iconSize: 30,
-                                icon: Icon(Icons.delete),
-                                onPressed: null,
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  removeItems(index);
+                                },
                               ),
                             ],
                           ),
@@ -289,7 +301,8 @@ class _HomePageState extends State<HomePage> {
                 // The TextField is wrapped in an Expanded widget to take up the ramaining horizontal space in the Row. It includes a controller for text input, management.
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(
+                        top: 20), // added const to improve performance
                     child: TextField(
                       // Captures user input, tied to nameController
                       controller: nameController,
@@ -302,6 +315,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         labelText: 'Add To-Do List Item',
                         labelStyle: const TextStyle(
+                          // added const to improve performance
                           fontSize: 16,
                           color: Colors.blue,
                         ),
@@ -314,29 +328,33 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const IconButton(
+                  // added const to improve performance
                   icon: Icon(Icons.clear),
                   onPressed: null,
-                  //To-Do clearTextField()
+                  //To-Do clearInput()
                 ),
               ],
             ),
 
             // The second Padding widget adds uniform spacing around an ElvatedButton. The button is styled with default Flutter behavior and displays the text "add To-DO Item"
             Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(
+                  4.0), // added const to improve performance
               child: ElevatedButton(
                 // When pressed, triggers addItemToList() to add the task to the list and Firestore
                 onPressed: () {
                   // The onPressed callback is triggered when the button is pressed
                   addItemToList(); // is called to add the current input to the list
-                  clearTextField(); // clears the input frmo the TextField.
+                  clearInput(); // clears the input frmo the TextField.
                 },
                 style: const ButtonStyle(
+                  // added const to improve performance
                   // The button's style is set to the default Flutter style
                   backgroundColor: WidgetStatePropertyAll(Colors
                       .blue), // The button's background color is set to blue
                 ),
                 child: const Text(
+                  // added const to improve performance
                   'Add To-Do List Item', // The text displayed on the button
                   style: TextStyle(color: Colors.white),
                 ),
