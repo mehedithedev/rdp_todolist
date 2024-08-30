@@ -26,17 +26,6 @@ class MainApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(),
-
-      // Test Code Below
-      // home: const Scaffold(
-      //   body: Center(
-      //     child: Text(
-      //       'Hello, The app is working',
-      //       style: TextStyle(
-      //           color: Colors.brown, fontSize: 30, fontFamily: 'Caveat'),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
