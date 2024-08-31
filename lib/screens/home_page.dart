@@ -17,8 +17,10 @@ class _HomePageState extends State<HomePage> {
       FirebaseFirestore.instance; // Create a Firestore instance.
 
   final List<String> tasks = <String>[]; // Stores the tasks entered by the user
-  final List<bool> checkboxes =
-      List.generate(8, (index) => false); // 
+  final List<bool> checkboxes = List.generate(
+      8,
+      (index) =>
+          false); // Tracks the completion status of tasks: true if completed, false if not
   TextEditingController nameController =
       TextEditingController(); // Controller for task input.
 
@@ -29,23 +31,26 @@ class _HomePageState extends State<HomePage> {
     final String taskName = nameController.text;
 
     if (taskName != '') {
+      // Add to the Firestore collection
       await db.collection('tasks').add({
-        'name': taskName,
-        'completed': false,
-        'timestamp': FieldValue.serverTimestamp(),
+        'name': taskName, // get the task name from nameController
+        'completed': false,  // add the task to Firestore with completed wet to false
+        'timestamp': FieldValue.serverTimestamp(), // add a timestamp to the task
       });
 
       setState(() {
-        tasks.insert(0, taskName); // Insert task at the start of the list.
-        checkboxes.insert(0, false); // Insert a corresponding checkbox state.
+        // clear the text input field and update the UI with setState()
+        tasks.insert(0, taskName); // add the task to tasks list
+        checkboxes.insert(0, false); // initializing checkboxes to false to maintain consitency
       });
     }
   }
 
-  // Removes a task from the Firestore database and updates the UI.
+
   void removeItems(int index) async {
     // Get the task to be removed.
-    String taskToBeRemoved = tasks[index];
+    String taskToBeRemoved = tasks[index]; // Identify the task name to remove based on its position in tasks list
+
 
     // Remove the task from Firestore.
     QuerySnapshot querySnapshot = await db
@@ -60,6 +65,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     setState(() {
+            // Update the UI with setState()
       tasks.removeAt(index); // Remove task from the local list.
       checkboxes.removeAt(index); // Remove the corresponding checkbox state.
     });
