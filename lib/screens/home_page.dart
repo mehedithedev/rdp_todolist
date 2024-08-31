@@ -120,23 +120,25 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       // Find the index of the task in the task list.
-      int taskIndex = tasks.indexWhere((task) => task == taskName);
+      int taskIndex = tasks.indexWhere((task) => task == taskName); // Identify the task by its position in tasks
 
       // Update the corresponding checkbox value in the checkbox list.
-      checkboxes[taskIndex] = completed;
+      checkboxes[taskIndex] = completed;  // Reflect the change in the checkboxes list and update the UI with setState()
     });
   }
 
   @override
   void initState() {
-    super.initState();
-    fetchTasksFromFirestore(); // Fetch tasks from Firestore when the widget is initialized.
+     // Called when the widget is first created
+    super.initState(); // Call the parent class's initState
+    fetchTasksFromFirestore(); // Automatically fetches tasks from Firestore to populate the app's task list as soon as the widget is loaded
   }
 
-  // Clears the input field for task entry.
+  // Below is the method to clear the text field
   void clearInput() {
+    
     setState(() {
-      nameController.clear();
+      nameController.clear();   // clear the text field after the user has added a task to the list
     });
   }
 
