@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
             // Update the UI with setState()
       tasks.removeAt(index); // Remove task from the local list.
-      checkboxes.removeAt(index); // Remove the corresponding checkbox state.
+      checkboxes.removeAt(index); // Remove the corresponding checkbox value from the checkboxes list
     });
   }
 
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
     List<String> fetchedTasks = [];
 
     // Loop through each doc (task) in the querySnapshot object.
-    for (QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
+    for (QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {  // Itereate through the Firestore documents, adding the name and completed status to the lists
       // Get the task name from the data.
       String taskName = docSnapshot.get('name');
 
@@ -95,8 +95,8 @@ class _HomePageState extends State<HomePage> {
       checkboxes.add(completed); // Add the corresponding checkbox state.
     }
     setState(() {
-      tasks.clear(); // Clear the existing task list.
-      tasks.addAll(fetchedTasks); // Add the fetched tasks to the list.
+      tasks.clear(); // Clear the app's tasks and checkboxes lists
+      tasks.addAll(fetchedTasks); // Populate the app's tasks and checkboxes lists with the fetched data and update the UI
     });
   }
 
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
 
     // Query Firestore for tasks with the given task name.
     QuerySnapshot querySnapshot =
-        await tasksCollection.where('name', isEqualTo: taskName).get();
+        await tasksCollection.where('name', isEqualTo: taskName).get(); // Query Firestore for the specific task by name
 
     // If a matching document is found.
     if (querySnapshot.size > 0) {
