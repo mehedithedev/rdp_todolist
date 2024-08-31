@@ -317,17 +317,20 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 // The second Padding widget adds uniform spacing around an ElvatedButton. The button is styled with default Flutter behavior and displays the text "add To-DO Item"
                 padding: EdgeInsets.all(4.0),
-                child: ElevatedButton( // When pressed, triggers addItemToList() to add the task to the list and Firestore
-                  onPressed: () { // The onPressed callback is triggered when the button is pressed
+                child: ElevatedButton(
+                  // When pressed, triggers addItemToList() to add the task to the list and Firestore
+                  onPressed: () {
+                    // The onPressed callback is triggered when the button is pressed
                     addItemToList(); // is called to add the current input to the list
                     clearInput(); // clears the input frmo the TextField.
                   },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
+                  style: const ButtonStyle(
+                    // The button's style is set to the default Flutter style
+                    backgroundColor: WidgetStatePropertyAll(
                         Colors.blue), // Button background color.
                   ),
-                  child: Text(
-                    'Add To-Do List Item',
+                  child: const Text(
+                    'Add To-Do List Item', // The text displayed on the button
                     style: TextStyle(color: Colors.white), // Button text color.
                   ),
                 ),
